@@ -1,0 +1,4 @@
+﻿  asst2.cpp
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw2\hw3d\asst2.cpp(31): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+  asst2.vcxproj -> C:\Users\m2ucr\Desktop\2018Spring\CS380\Homework\HW2\hw3d\.\Debug\asst2.exe
