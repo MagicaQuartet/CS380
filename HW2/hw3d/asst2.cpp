@@ -340,7 +340,8 @@ static void motion(const int x, const int y) {
 			  Matrix4 a;
 			  if (g_skyMode == 0) {
 				  a = linFact(g_skyRbt);
-				  m = inv(m);
+				  //m = inv(m);
+				  m = inv(transFact(m)) * inv(linFact(m));
 			  }
 			  else {
 				  a = g_skyRbt;
