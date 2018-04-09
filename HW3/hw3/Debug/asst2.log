@@ -1,0 +1,9 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(.\Debug\)에 다른 프로젝트(asst2.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  asst3.cpp
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw3\hw3\asst3.cpp(34): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+  코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  ppm.cpp
+  glsupport.cpp
+  asst2.vcxproj -> C:\Users\m2ucr\Desktop\2018Spring\CS380\Homework\HW3\hw3\.\Debug\asst3.exe
