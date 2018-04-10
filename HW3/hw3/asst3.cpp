@@ -392,7 +392,12 @@ static void motion(const int x, const int y) {
 	  }
   }
   else if (g_mouseRClickButton && !g_mouseLClickButton) { // right button down?
-    m = RigTForm(Cvec3(dx, dy, 0) * 0.01);
+	if ((g_objectView == 0 && g_objectToggle != 0) || (g_objectView == 0 && g_objectToggle == 0 && g_skyMode == 0) || g_objectView + g_objectToggle == 3) {
+		m = RigTForm(Cvec3(dx, dy, 0) * g_arcballScale);
+	}
+	else {
+		m = RigTForm(Cvec3(dx, dy, 0) * 0.01);
+	}
   }
   else if (g_mouseMClickButton || (g_mouseLClickButton && g_mouseRClickButton)) {  // middle or (left and right) button down?
 	  if ((g_objectView == 0 && g_objectToggle != 0) || (g_objectView == 0 && g_objectToggle == 0 && g_skyMode == 0) || g_objectView + g_objectToggle == 3) {
