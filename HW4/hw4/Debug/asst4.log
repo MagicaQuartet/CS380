@@ -1,0 +1,41 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(.\Debug\)에 다른 프로젝트(asst2.vcxproj, asst3.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  asst4.cpp
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(19): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(48): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(49): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(55): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(60): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(90): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(91): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(130): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+  c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(155): note: 컴파일 중인 클래스 템플릿 인스턴스화 'SgGeometryShapeNode<Geometry>'에 대한 참조를 확인하세요.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\scenegraph.h(134): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\memory(3081): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\picker.h(19): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\picker.h(21): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\picker.h(29): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\picker.h(30): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\picker.h(42): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(38): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(598): warning C4838: 'const double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(617): warning C4838: 'double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(617): warning C4838: 'const double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
+  코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  ppm.cpp
+  glsupport.cpp
+  asst4.vcxproj -> C:\Users\m2ucr\Desktop\2018Spring\CS380\Homework\HW4\hw4\.\Debug\asst4.exe
