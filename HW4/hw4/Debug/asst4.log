@@ -31,9 +31,9 @@ c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\picker.h(42): warning C
   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
 c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(38): warning C4996: 'std::tr1': warning STL4002: The non-Standard std::tr1 namespace and TR1-only machinery are deprecated and will be REMOVED. You can define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING to acknowledge that you have received this warning.
   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\tuple(1166): note: 'std::tr1' 선언을 참조하십시오.
-c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(598): warning C4838: 'const double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(617): warning C4838: 'double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(617): warning C4838: 'const double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(594): warning C4838: 'const double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(613): warning C4838: 'double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\m2ucr\desktop\2018spring\cs380\homework\hw4\hw4\asst4.cpp(613): warning C4838: 'const double'에서 'float'(으)로의 변환에는 축소 변환이 필요합니다.
   코드를 생성하고 있습니다...
   건너뛰고 있습니다... (관련된 변경 내용 없음)
   ppm.cpp

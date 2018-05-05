@@ -265,7 +265,7 @@ static void drawStuff(const ShaderState& curSS, bool picking) {
 		g_world->accept(drawer);
 
 		// draw arcball as part of asst3
-		if ((g_objectView == 0 && g_skyMode == 0) || g_currentPickedRbtNode != NULL) {
+		if (((g_objectView == 0 && g_skyMode == 0) || g_currentPickedRbtNode != NULL) && !((g_objectView == 1 && g_currentPickedRbtNode == g_robot1Node) || (g_objectView == 2 && g_currentPickedRbtNode == g_robot2Node))) {
 			if (!(g_mouseMClickButton || (g_mouseLClickButton && g_mouseRClickButton)))
 				g_arcballScale = getScreenToEyeScale((invEyeRbt * g_sphereRbt).getTranslation()[2], g_frustFovY, g_windowHeight);
 			Matrix4 MVM = rigTFormToMatrix(invEyeRbt * g_sphereRbt) * Matrix4::makeScale(Cvec3(g_arcballScale, g_arcballScale, g_arcballScale));
@@ -338,7 +338,7 @@ static void motion(const int x, const int y) {
 	RigTForm m;
 	if (g_mouseLClickButton && !g_mouseRClickButton) { // left button down?
 		Quat src, dest;
-		if ((g_objectView == 0 && g_skyMode == 0) || g_currentPickedRbtNode != NULL) {
+		if (((g_objectView == 0 && g_skyMode == 0) || g_currentPickedRbtNode != NULL) && !((g_objectView == 1 && g_currentPickedRbtNode == g_robot1Node) || (g_objectView == 2 && g_currentPickedRbtNode == g_robot2Node))) {
 			Cvec2 sphereCenterScreenSpaceCoord = getScreenSpaceCoord((inv(g_viewpointRbt) * g_sphereRbt).getTranslation(), makeProjectionMatrix(), g_frustNear, g_frustFovY, g_windowWidth, g_windowHeight);
 			Cvec3 temp;
 			double mouseClickZ = pow(g_arcballScreenRadius, 2) - pow(g_mouseClickX - sphereCenterScreenSpaceCoord[0], 2) - pow(g_mouseClickY - sphereCenterScreenSpaceCoord[1], 2);
@@ -386,7 +386,7 @@ static void motion(const int x, const int y) {
 	}
 
 	if (g_mouseClickDown) {
-		if (g_currentPickedRbtNode == NULL) {
+		if (g_currentPickedRbtNode == NULL || (g_objectView == 1 && g_currentPickedRbtNode == g_robot1Node) || (g_objectView == 2 && g_currentPickedRbtNode == g_robot2Node)) {
 			RigTForm a;
 			if (g_objectView == 0) {
 				if (g_skyMode == 0) {
@@ -459,10 +459,6 @@ static void mouse(const int button, const int state, const int x, const int y) {
 	else {
 		g_sphereRbt = getPathAccumRbt(g_world, g_currentPickedRbtNode);
 		Matrix4 temp = rigTFormToMatrix(g_sphereRbt);
-		for (int i = 0; i < 16; i++) {
-			cout << temp[i] << " " << ((i+1)%4 == 0 ? "\n" : "");
-		}
-		cout << endl;
 	}
 
 	glutPostRedisplay();

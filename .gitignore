@@ -1,1 +1,5 @@
 *.zip
+*.sln
+*.vcxproj
+*.vcxproj.user
+asst*-bin
