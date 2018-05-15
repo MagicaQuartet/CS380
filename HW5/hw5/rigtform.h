@@ -87,6 +87,10 @@ inline RigTForm linFact(const RigTForm& tform) {
   return RigTForm(tform.getRotation());
 }
 
+inline RigTForm interpolate(const RigTForm& a, const RigTForm& b, double t) {
+	return RigTForm(lerp(a.getTranslation(), b.getTranslation(), t), slerp(a.getRotation(), b.getRotation(), t));
+}
+
 inline Matrix4 rigTFormToMatrix(const RigTForm& tform) {
   // TODO
 	Matrix4 m, t, r;

@@ -133,6 +133,31 @@ inline Quat normalize(const Quat& q) {
   return q / std::sqrt(norm2(q));
 }
 
+inline Quat cn(const Quat& q) {
+	return q(0) < 0 ? Quat(-q(0), -q(1), -q(2), -q(3)) : Quat(q(0), q(1), q(2), q(3));
+}
+
+inline Quat power(const Quat& q, double t) {
+	double theta;
+	double cosine = q(0), sine = std::sqrt(abs(1 - cosine * cosine));
+
+	//std::cout << "sin: " << sine << " cos: " << cosine << std::endl;
+
+	theta = atan2(sine, q(0)) * 2;
+
+	//std::cout << "theta: " << theta << std::endl;
+
+	if (sine == 0)
+		return Quat(cos(theta * t / 2), 0, 0, 0);
+	else
+		return Quat(cos(theta * t / 2), sin(theta * t / 2) / sine * q(1), sin(theta * t / 2) / sine * q(2), sin(theta * t / 2) / sine * q(3));
+}
+
+inline Quat slerp(const Quat& a, const Quat& b, double t) {
+	assert(t >= 0 && t <= 1);
+	return power(cn(b * inv(a)), t) * a;
+}
+
 inline Matrix4 quatToMatrix(const Quat& q) {
   Matrix4 r;
   const double n = norm2(q);

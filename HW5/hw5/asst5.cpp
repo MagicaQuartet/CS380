@@ -12,6 +12,7 @@
 #include <cmath>
 #include <memory>
 #include <stdexcept>
+#include <fstream>
 #if __GNUG__
 #   include <tr1/memory>
 #endif
@@ -175,10 +176,18 @@ static double g_arcballScreenRadius = 0.25 * min(g_windowHeight, g_windowWidth);
 
 // keyframe
 
-static vector<RigTForm> g_currentKeyFrame;
 static vector<shared_ptr<SgRbtNode>> g_allNodes;
 static list<vector<RigTForm>> g_keyFrameList;
 static list<vector<RigTForm>>::iterator g_currentKeyFrameIterator;
+
+// animation
+static int g_KeyFrameIndex = -1;
+static int g_msBetweenKeyFrames = 2000; // 2 seconds between keyframes
+static int g_animateFramesPerSecond = 60; // frames to render per second during animation playback
+static bool g_playingAnimation = false;
+static bool g_stopAnimation = false;
+
+
 
 ///////////////// END OF G L O B A L S //////////////////////////////////////////////////
 
@@ -496,6 +505,82 @@ static void showCurrentKeyFrame() {
 	}
 }
 
+// Given t in the range [0, n], perform interpolation and draw the scene
+// for the particular t. Returns true if we are at the end of the animation
+// sequence, or false otherwise.
+bool interpolateAndDisplay(float t) {
+	int offset = floor(t);
+	list<vector<RigTForm>>::iterator it1 = g_keyFrameList.begin(), it2 = g_keyFrameList.end();
+	vector<RigTForm>::iterator it_rbt1, it_rbt2;
+	vector<shared_ptr<SgRbtNode>>::iterator it_node;
+	
+	if (g_stopAnimation) {
+		g_stopAnimation = false;
+		return true;
+	}
+
+	++it1;
+	--it2;
+	--it2;
+
+	for (int i = 0; i < offset; i++) {
+		++it1;
+		if (it1 == it2)
+			return true;
+	}
+
+	it2 = it1;
+	++it2;
+	
+	it_rbt1 = (*it1).begin();
+	it_rbt2 = (*it2).begin();
+
+	for (it_node = g_allNodes.begin(); it_node != g_allNodes.end(); ++it_node, ++it_rbt1, ++it_rbt2) {
+		//cout << "time: " << t - offset << endl;
+		(*it_node)->setRbt(interpolate((*it_rbt1), (*it_rbt2), t - offset));
+
+		//RigTForm temp = (*it_node)->getRbt();
+		//cout << "Cvec3: " << temp.getTranslation()[0] << " " << temp.getTranslation()[1] << " " << temp.getTranslation()[2] << " " << "\nQuat: " << temp.getRotation()[0] << " " << temp.getRotation()[1] << " " << temp.getRotation()[2] << " " << temp.getRotation()[3] << endl;
+	}
+	return false;
+}
+// Interpret "ms" as milliseconds into the animation
+static void animateTimerCallback(int ms) {
+	float t = (float)ms / (float)g_msBetweenKeyFrames;
+	bool endReached = interpolateAndDisplay(t);
+
+	if (g_objectView == 0) {
+		g_viewpointRbt = getPathAccumRbt(g_world, g_skyNode);
+	}
+	else if (g_objectView == 1) {
+		g_viewpointRbt = getPathAccumRbt(g_world, g_robot1Node);
+	}
+	else {
+		g_viewpointRbt = getPathAccumRbt(g_world, g_robot2Node);
+	}
+
+	if (g_currentPickedRbtNode == NULL) {
+		g_sphereRbt = RigTForm();
+	}
+	else {
+		g_sphereRbt = getPathAccumRbt(g_world, g_currentPickedRbtNode);
+	}
+
+	glutPostRedisplay();
+	
+	if (!endReached)
+		glutTimerFunc(1000 / g_animateFramesPerSecond, animateTimerCallback, ms + 1000 / g_animateFramesPerSecond);
+	else {
+		g_playingAnimation = false;
+		g_currentKeyFrameIterator = g_keyFrameList.end();
+		--g_currentKeyFrameIterator;
+		--g_currentKeyFrameIterator;
+		g_KeyFrameIndex = g_keyFrameList.size() - 2;
+		cout << "Now at frame [" << g_KeyFrameIndex << "]" << endl;
+		showCurrentKeyFrame();
+	}
+}
+
 static void keyboard(const unsigned char key, const int x, const int y) {
 	switch (key) {
 	case 27:
@@ -547,71 +632,73 @@ static void keyboard(const unsigned char key, const int x, const int y) {
 		cout << (g_isPicking ? "Picking On" : "Picking Off") << endl;
 		break;
 	case ' ':		// Show current keyframe
-		if (!g_keyFrameList.empty()) {
+		if (!g_keyFrameList.empty() && !g_playingAnimation) {
 			showCurrentKeyFrame();
-			cout << "Show current keyframe" << endl;
+			cout << "Loading current key frame [" << g_KeyFrameIndex << "] to scene graph" << endl;
 		}
 		break;
 	case 'u':		// Update current keyframe
-		if (!g_keyFrameList.empty()) {
-			(*g_currentKeyFrameIterator).clear();
+		if (!g_playingAnimation) {
+			if (!g_keyFrameList.empty()) {
+				(*g_currentKeyFrameIterator).clear();
 
-			for (vector<shared_ptr<SgRbtNode>>::iterator it_ptr = g_allNodes.begin(); it_ptr != g_allNodes.end(); ++it_ptr) {
-				(*g_currentKeyFrameIterator).push_back((*it_ptr)->getRbt());
+				for (vector<shared_ptr<SgRbtNode>>::iterator it_ptr = g_allNodes.begin(); it_ptr != g_allNodes.end(); ++it_ptr) {
+					(*g_currentKeyFrameIterator).push_back((*it_ptr)->getRbt());
+				}
+
+				cout << "Copying scene graph to current frame [" << g_KeyFrameIndex << "]" << endl;
 			}
+			else {
+				vector<RigTForm> currentFrame;
 
-			cout << "Update current keyframe" << endl;
-		}
-		else {
-			vector<RigTForm> currentFrame;
+				for (vector<shared_ptr<SgRbtNode>>::iterator it = g_allNodes.begin(); it != g_allNodes.end(); ++it) {
+					currentFrame.push_back((*it)->getRbt());
+				}
 
-			for (vector<shared_ptr<SgRbtNode>>::iterator it = g_allNodes.begin(); it != g_allNodes.end(); ++it) {
-				currentFrame.push_back((*it)->getRbt());
+				g_keyFrameList.push_back(currentFrame);
+				g_currentKeyFrameIterator = g_keyFrameList.begin();
+				g_KeyFrameIndex = 0;
+
+				cout << "Create new frame [" << g_KeyFrameIndex << "]" << endl;
 			}
-
-			g_keyFrameList.push_back(currentFrame);
-			g_currentKeyFrameIterator = g_keyFrameList.begin();
-
-			cout << "Create first keyframe" << endl;
 		}
 		break;
 	case '>':		// Move to next keyframe
-		if (!g_keyFrameList.empty()) {
-			++g_currentKeyFrameIterator;
-
-			if (g_currentKeyFrameIterator != g_keyFrameList.end()) {
+		if (!g_keyFrameList.empty() && !g_playingAnimation) {
+			list<vector<RigTForm>>::iterator it = g_keyFrameList.end();
+			--it;
+			if (g_currentKeyFrameIterator != it) {
+				++g_currentKeyFrameIterator;
+				g_KeyFrameIndex += 1;
+				cout << "Stepped forward to frame [" << g_KeyFrameIndex << "]" << endl;
 				showCurrentKeyFrame();
-				cout << "Show next keyframe" << endl;
-			}
-			else {
-				--g_currentKeyFrameIterator;
 			}
 		}
 		break;
 	case '<':		// Move to previous keyframe
-		if (!g_keyFrameList.empty() && g_currentKeyFrameIterator != g_keyFrameList.begin()) {
+		if (!g_keyFrameList.empty() && g_currentKeyFrameIterator != g_keyFrameList.begin() && !g_playingAnimation) {
 			--g_currentKeyFrameIterator;
+			g_KeyFrameIndex -= 1;
 			showCurrentKeyFrame();
 
-			cout << "Show previous keyframe" << endl;
+			cout << "Stepped backward to frame [" << g_KeyFrameIndex << "]" << endl;
 		}
 		break;
 	case 'd':		// Delete current keyframe
-		if (!g_keyFrameList.empty()) {
+		if (!g_keyFrameList.empty() && !g_playingAnimation) {
 			g_currentKeyFrameIterator = g_keyFrameList.erase(g_currentKeyFrameIterator);
 
-			cout << "delete current keyframe";
 			if (!g_keyFrameList.empty()) {
 				if (g_currentKeyFrameIterator != g_keyFrameList.begin()) {
 					--g_currentKeyFrameIterator;
+					g_KeyFrameIndex -= 1;
 				}
-
+				cout << "Now at frame [" << g_KeyFrameIndex << "]" << endl;
 				showCurrentKeyFrame();
 			}
 			else {
-				cout << ": No keyframe left";
+				cout << "Frame list is now EMPTY" << endl;;
 			}
-			cout << endl;
 		}
 		break;
 	case 'n':		// Create current keyframe		
@@ -625,23 +712,93 @@ static void keyboard(const unsigned char key, const int x, const int y) {
 		if (g_keyFrameList.empty()) {
 			g_keyFrameList.push_back(currentFrame);
 			g_currentKeyFrameIterator = g_keyFrameList.begin();
-
-			cout << "Create first keyframe" << endl;
+			g_KeyFrameIndex = 0;
 		}
 		else {
 			++g_currentKeyFrameIterator;
 			g_keyFrameList.insert(g_currentKeyFrameIterator, currentFrame);
 			--g_currentKeyFrameIterator;
-
-			cout << "Create keyframe" << endl;
+			g_KeyFrameIndex += 1;
 		}
+		cout << "Create new frame [" << g_KeyFrameIndex << "]" << endl;
 		break;
 	}
 	case 'i':		// read keyframes file
+		if (!g_playingAnimation) {
+			ifstream f("animation.txt");
+			int keyframes, nodes, cnt;
+			double t0, t1, t2, q0, q1, q2, q3;
+
+			g_keyFrameList.clear();
+			f >> keyframes >> nodes;
+			cnt = keyframes;
+			
+			while (!f.eof() && f.is_open() && cnt > 0) {
+				vector<RigTForm> keyframe;
+				for (int i = 0; i < nodes && !f.eof() && f.is_open(); i++) {
+					f >> t0 >> t1 >> t2 >> q0 >> q1 >> q2 >> q3;
+					Cvec3 _t = Cvec3(t0, t1, t2);
+					Quat _r = Quat(q0, q1, q2, q3);
+					RigTForm rbt = RigTForm(_t, _r);
+					keyframe.push_back(rbt);
+				}
+				cnt--;
+
+				g_keyFrameList.push_back(keyframe);
+			}
+
+			g_KeyFrameIndex = 0;
+
+			cout << keyframes << " frames read." << endl;
+			if (!g_keyFrameList.empty()) {
+				g_currentKeyFrameIterator = g_keyFrameList.begin();
+				showCurrentKeyFrame();
+				cout << "Now at frame [" << g_KeyFrameIndex << "]" << endl;
+			}
+		}
 		break;
 	case 'w':		// write keyframes file
-		break;
+	{
+		ofstream f("animation.txt", ios::binary);
+		cout << "Writing animation to animation.txt" << endl;
 
+		f << g_keyFrameList.size() << " " << g_allNodes.size() << endl;
+		for (list<vector<RigTForm>>::iterator it = g_keyFrameList.begin(); it != g_keyFrameList.end(); ++it) {
+			vector<RigTForm> keyframe = *it;
+			for (vector<RigTForm>::iterator it_rbt = keyframe.begin(); it_rbt != keyframe.end(); ++it_rbt) {
+				RigTForm rbt = *it_rbt;
+				Cvec3 _t = rbt.getTranslation();
+				Quat _r = rbt.getRotation();
+				f << _t[0] << " " << _t[1] << " " << _t[2] << " " << _r(0) << " " << _r(1) << " " << _r(2) << " " << _r(3) << endl;
+			}
+		}
+		break;
+	}
+	case 'y':
+		if (!g_playingAnimation) {
+			if (g_keyFrameList.size() > 3) {
+				if (!g_playingAnimation) {
+					cout << "Play animation..." << endl;
+					g_playingAnimation = true;
+					animateTimerCallback(0);
+				}
+			}
+			else {
+				cout << "At least 4 frames are needed to play animation" << endl;
+			}
+		}
+		else {
+			g_stopAnimation = true;
+		}
+		break;
+	case '+':
+		g_msBetweenKeyFrames -= g_msBetweenKeyFrames > 100 ? 100 : 0;
+		cout << g_msBetweenKeyFrames << " ms between key frames" << endl;
+		break;
+	case '-':
+		g_msBetweenKeyFrames += 100;
+		cout << g_msBetweenKeyFrames << " ms between key frames" << endl;
+		break;
 	}
 	glutPostRedisplay();
 }
